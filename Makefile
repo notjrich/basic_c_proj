@@ -4,6 +4,7 @@ PATHO = build/obj/
 PATHB = build/
 
 BUILD_PATHS = $(PATHI) $(PATHS) $(PATHB) $(PATHO)
+CLEANUP = rm -r
 
 MKDIR = mkdir -p
 COMPILE = gcc -c
@@ -16,11 +17,8 @@ OBJECTS := $(PATHO)basic.o $(PATHO)main.o
 $(PATHB)main.out : $(OBJECTS)
 	$(LINK) -o $@ $^
 
-$(PATHO)basic.o: $(PATHS)basic.c $(DEPENDS)
-	$(COMPILE) $(CFLAGS) -o $@ $(PATHS)basic.c 
-
-$(PATHO)main.o: $(PATHS)main.c $(DEPENDS)
-	$(COMPILE) $(CFLAGS) -o $@ $(PATHS)main.c
+$(PATHO)%.o: $(PATHS)%.c $(DEPENDS)
+	$(COMPILE) $(CFLAGS) -o $@ $< 
 
 .PHONY: clean
 clean:
